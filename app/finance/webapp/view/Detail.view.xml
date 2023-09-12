@@ -1,0 +1,175 @@
+<mvc:View xmlns:internal="sap.landvisz.internal" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+    xmlns:f="sap.f" xmlns:html="http://www.w3.org/1999/xhtml"
+    controllerName="finance.controller.Detail" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+    xmlns:t="sap.ui.table" >
+
+    <f:DynamicPage >
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading >
+                    <Title text="{layout>groupType}"/>
+                </f:heading>
+                <f:navigationActions>
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" 
+                        tooltip="Full Screen" press="onFullScreen"  
+                        visible="{buttons>/fullScreen}" />
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" 
+                        tooltip="Exit Full Screen Mode" press="onExitFullScreen" 
+                        visible="{buttons>/exitFullScreen}" />
+                    <OverflowToolbarButton type="Transparent" icon="sap-icon://decline" 
+                        tooltip="Close" press="onClose"  
+                        visible="{buttons>/close}" />                   
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <FlexBox alignItems="Start" justifyContent="SpaceBetween">
+                    <items>
+                        <Panel backgroundDesign="Transparent" class="sapUiNoContentPadding">
+                            <content>
+                                <l:HorizontalLayout allowWrapping="true">
+                                    <l:VerticalLayout class="sapUiMediumMarginEnd">
+                                        <ObjectAttribute title="Expense 상세정보"/>
+                                    </l:VerticalLayout>
+                                    <l:VerticalLayout >
+                                        <ObjectAttribute text="빨간색으로 표기된 항목은 필수 항목입니다."/>
+                                    </l:VerticalLayout>
+                                </l:HorizontalLayout>
+                            </content>
+                        </Panel>
+                    </items>
+                </FlexBox>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <form:SimpleForm >
+                <VBox>
+                    <Panel headerText="[증빙 정보]" >
+                        <FlexBox>
+                        <HBox class="sapUiMediumMarginEnd" >
+                            <Label text="증빙 일자" class="sapUiMediumMarginEnd" width="100%" labelFor="date"/>
+                            <DatePicker
+                                id="date"
+                                class="sapUiMediumMarginEnd"
+                                required="true"
+                                width="100%"
+                                change=".changeDateHandler" />
+                                </HBox>
+                        <HBox class="sapUiMediumMarginEnd" >
+                            <Label text="증빙 유형"  class="sapUiMediumMarginEnd" width="100%"  labelFor="type"/>
+                            <Input id="type" class="sapUiMediumMarginEnd" width="100%"  value="법인카드" />
+                        </HBox>
+                        </FlexBox>
+                    </Panel>
+                    <Panel >
+                        <FlexBox>
+                            <HBox class="sapUiLargeMarginEnd">
+                                <Label text="금액" class="sapUiMediumMarginEnd" labelFor="amount"/>
+                                <Input id="amount" class="sapUiMediumMarginEnd" value="0" />
+                            </HBox>
+                            <HBox class="sapUiLargeMarginEnd">
+                                <Label text="사업장" class="sapUiMediumMarginEnd" />
+                                <ComboBox items="{accountMasterData>/accountSpecData}">
+                                    <items>
+                                        <core:ListItem key="{ID}" text="{label}" />
+                                    </items>
+                                </ComboBox>
+                                
+                            </HBox>                            
+                        </FlexBox>
+                    </Panel>
+                    <Panel >
+                        <FlexBox >
+                            <HBox class="sapUiLargeMarginEnd">
+                                <Label text="적요" class="sapUiMediumMarginEnd" labelFor="brief"/>
+                                <Input id="brief" class="sapUiLargeMarginEnd" />
+                            </HBox>
+                        </FlexBox>
+                    </Panel>
+                    <Panel headerText="[부가세 정보]" >
+                        <FlexBox >
+                            <HBox class="sapUiLargeMarginEnd">
+                                <Label text="사업자등록번호" class="sapUiMediumMarginEnd" labelFor="enroll"/>
+                                <Input id="enroll" class="sapUiLargeMarginEnd" value="" required="true"/>
+                            </HBox>
+                            <HBox class="sapUiLargeMarginEnd">
+                                <Label text="부가세" class="sapUiMediumMarginEnd" labelFor="tax"/>
+                                <Input id="tax" class="sapUiLargeMarginEnd" value=""/>
+                            </HBox>
+                        </FlexBox>
+                    </Panel>
+                </VBox>
+                
+                </form:SimpleForm>
+                    <!-- <form:content>
+                        <Label text="증빙일자"/>
+                        <DatePicker
+                            id="DP"
+                            width="100%"
+                            change=".changeDateHandler" />
+                    
+                        <VBox class="sapUiSmallMargin" >
+                            <Label text="By Button with icon" />
+                            <Button
+                                ariaHasPopup="Dialog"
+                                tooltip="Open Date Picker"
+                                icon="sap-icon://appointment-2"
+                                press=".openDatePicker" />
+                        </VBox>
+                        
+                        <Label text="증빙유형"/>
+                        <ComboBox 
+                            items="{
+                            path: '/AccountSpec',
+                            sorter: { path: 'ID' }
+                            }">
+                            
+                        </ComboBox>
+                        
+                    </form:content> -->
+                    
+                        <!-- <Label text="증빙유형"/> -->
+                        <!-- <Table >
+                            <headerToolbar>
+                                <Toolbar >
+                                    <Title text="증빙 정보" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column >
+                                    <Text text="증빙 일자"/>
+                                </Column>
+                                <Column >
+                                    <Text text="증빙 유형"/>
+                                </Column>
+                            </columns>
+                            <ColumnListItem vAlign="Middle" type="Navigation">
+                                <DatePicker
+                                    id="DP"
+                                    width="100%"
+                                    change=".changeDateHandler" />
+                                <Text text="법인카드"/>
+                            </ColumnListItem>
+                        </Table> -->
+                    
+                
+                <!-- <Panel headerText="첨부파일">
+                    <FlexBox renderType="Bare">
+                        <Button icon="sap-icon://download">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Button>
+                    </FlexBox>
+                </Panel> -->
+            
+            
+            
+        </f:content>
+        
+    
+    </f:DynamicPage>
+    
+</mvc:View>
