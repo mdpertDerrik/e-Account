@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+        <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="accountService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="AccountMaster" EntityType="accountService.AccountMaster">
+                    <NavigationPropertyBinding Path="accountSpec" Target="AccountSpec"/>
+                </EntitySet>
+                <EntitySet Name="AccountSpec" EntityType="accountService.AccountSpec">
+                    <NavigationPropertyBinding Path="accountMaster" Target="AccountMaster"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="AccountMaster">
+                <Key>
+                    <PropertyRef Name="accountID"/>
+                </Key>
+                <Property Name="accountID" Type="Edm.String" MaxLength="20" Nullable="false"/>
+                <Property Name="accountName" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="accountSpec" Type="Collection(accountService.AccountSpec)" Partner="accountMaster">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="AccountSpec">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="accountMaster" Type="accountService.AccountMaster" Partner="accountSpec">
+                    <ReferentialConstraint Property="accountMaster_accountID" ReferencedProperty="accountID"/>
+                </NavigationProperty>
+                <Property Name="accountMaster_accountID" Type="Edm.String" MaxLength="20"/>
+                <Property Name="label" Type="Edm.String" MaxLength="200"/>
+                <Property Name="groupType" Type="Edm.String" MaxLength="10"/>
+                <Property Name="mandatory" Type="Edm.String" MaxLength="2"/>
+                <Property Name="readonly" Type="Edm.String" MaxLength="2"/>
+                <Property Name="componetType" Type="Edm.String" MaxLength="10"/>
+                <Property Name="dataType" Type="Edm.String" MaxLength="5"/>
+                <Property Name="displayType" Type="Edm.String" MaxLength="5"/>
+                <Property Name="displayValue" Type="Edm.String" MaxLength="2000"/>
+            </EntityType>
+            <Annotations Target="accountService.AccountSpec/componetType">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="text"/>
+                            <PropertyValue Property="Value" String="text"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="input"/>
+                            <PropertyValue Property="Value" String="input"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="combobox"/>
+                            <PropertyValue Property="Value" String="combobox"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="datePicker"/>
+                            <PropertyValue Property="Value" String="datePicker"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="dateRange"/>
+                            <PropertyValue Property="Value" String="dateRange"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="accountService.AccountSpec/dataType">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="text"/>
+                            <PropertyValue Property="Value" String="text"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="numeric"/>
+                            <PropertyValue Property="Value" String="numeric"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="json"/>
+                            <PropertyValue Property="Value" String="json"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="date"/>
+                            <PropertyValue Property="Value" String="date"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="accountService.AccountSpec/displayType">
+                <Annotation Term="Validation.AllowedValues">
+                    <Collection>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="row"/>
+                            <PropertyValue Property="Value" String="row"/>
+                        </Record>
+                        <Record Type="Validation.AllowedValue">
+                            <Annotation Term="Core.SymbolicName" String="section2"/>
+                            <PropertyValue Property="Value" String="section2"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

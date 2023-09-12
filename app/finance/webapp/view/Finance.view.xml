@@ -1,0 +1,40 @@
+<mvc:View controllerName="finance.controller.Finance"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:f="sap.f">
+    <f:DynamicPage >
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading>
+                    <Title text="accountMaster"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <Table width="auto"
+                items="{
+                    path: '/AccountMaster'
+                }">
+                <columns>
+                    <Column >
+                        <Text text="accountID"/>
+                    </Column>
+                    <Column >
+                        <Text text="accountName"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press="onItemPress">
+                        <cells>
+                            <Text text="{accountID}"/>
+                            <Text text="{accountName}"/>
+                        </cells>
+                            
+                    </ColumnListItem>
+                </items>
+                
+            </Table>
+        </f:content>
+	
+    </f:DynamicPage>
+</mvc:View>
